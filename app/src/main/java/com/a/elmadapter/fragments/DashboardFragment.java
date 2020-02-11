@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.a.elmadapter.R;
@@ -15,7 +16,7 @@ public class DashboardFragment extends Fragment {
 
     private static final String TAG = DashboardFragment.class.getSimpleName();
 
-    OnFragmentListener listener;
+    private OnFragmentListener listener;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -24,18 +25,16 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dashboard, container, false);
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         Log.d(TAG, "onAttach");
         super.onAttach(context);
         if (context instanceof OnFragmentListener) {
@@ -61,6 +60,6 @@ public class DashboardFragment extends Fragment {
     }
 
     public interface OnFragmentListener {
-        public void onChangeToolbarTitle(String title);
+        void onChangeToolbarTitle(String title);
     }
 }
