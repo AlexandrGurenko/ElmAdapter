@@ -12,6 +12,8 @@
  */
 package com.a.elmadapter.obd.obd.commands;
 
+import androidx.annotation.NonNull;
+
 import com.a.elmadapter.obd.obd.enums.AvailableCommand;
 import com.a.elmadapter.obd.obd.exceptions.BusInitException;
 import com.a.elmadapter.obd.obd.exceptions.MisunderstoodCommandException;
@@ -252,13 +254,13 @@ public abstract class ObdCommand implements IObdCommand {
     }
 
     /**
-     * <p>getName.</p>
+     * <p>getNameCommand.</p>
      *
      * @return the OBD command name.
      */
-    public String getName() {
-        return this.cmd.getValue();
-    }
+
+    @Override
+    public abstract String getNameCommand();
 
     /**
      * <p>getCommandPID.</p>
@@ -425,8 +427,9 @@ public abstract class ObdCommand implements IObdCommand {
         return cmd == that.cmd || cmd != null && that.cmd != null && cmd.toString().equals(that.cmd.toString());
     }
 
+    @NonNull
     @Override
     public String toString() {
-        return getName() + " = " + getFormattedResult() + "\n";
+        return getNameCommand() + " = " + getFormattedResult() + "\n";
     }
 }

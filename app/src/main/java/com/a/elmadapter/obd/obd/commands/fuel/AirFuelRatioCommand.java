@@ -67,4 +67,9 @@ public class AirFuelRatioCommand extends ObdCommand {
         return afr;
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.AIR_FUEL_RATIO.getValue();
+    }
+
 }

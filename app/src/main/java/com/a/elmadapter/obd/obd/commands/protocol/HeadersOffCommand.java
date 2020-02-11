@@ -43,4 +43,10 @@ public class HeadersOffCommand extends ObdProtocolCommand {
         return getResult();
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.HEADERS_OFF.getValue();
+    }
+
+
 }

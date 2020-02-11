@@ -104,4 +104,9 @@ public class SpeedCommand extends ObdCommand implements SystemOfUnits {
         return imperialUnits ? "mph" : "km/h";
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.SPEED.getValue();
+    }
+
 }

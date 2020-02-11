@@ -57,4 +57,9 @@ public class AbsoluteLoadCommand extends PercentageObdCommand {
         return percentage;
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.ABS_LOAD.getValue();
+    }
+
 }

@@ -13,6 +13,7 @@
 package com.a.elmadapter.obd.obd.commands.fuel;
 
 import com.a.elmadapter.obd.obd.commands.PercentageObdCommand;
+import com.a.elmadapter.obd.obd.enums.AvailableCommand;
 import com.a.elmadapter.obd.obd.enums.FuelTrim;
 
 /**
@@ -25,10 +26,8 @@ public class FuelTrimCommand extends PercentageObdCommand {
      * <p>
      * Will read the bank from parameters and construct the command accordingly.
      * Please, see FuelTrim enum for more details.
-     *
-     * @param bank a {@link br.ufrn.imd.obd.enums.AvailableCommand} object.
      */
-    public FuelTrimCommand(final FuelTrim bank) {
+    private FuelTrimCommand(final FuelTrim bank) {
         super(bank.getValue());
     }
 
@@ -48,13 +47,9 @@ public class FuelTrimCommand extends PercentageObdCommand {
         percentage = (100f / 128) * buffer.get(2) - 100;
     }
 
-    /**
-     * <p>Getter for the field <code>bank</code>.</p>
-     *
-     * @return the name of the bank in string representation.
-     */
-    public final String getBank() {
-        return getName();
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.SHORT_TERM_BANK_1.getValue();
     }
 
 }

@@ -82,4 +82,9 @@ public class ConsumptionRateCommand extends ObdCommand {
         return fuelRate;
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.FUEL_CONSUMPTION_RATE.getValue();
+    }
+
 }

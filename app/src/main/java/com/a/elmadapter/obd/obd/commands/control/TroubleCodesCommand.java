@@ -49,4 +49,8 @@ public class TroubleCodesCommand extends GenericTroubleCodeCommand {
         return CARRIAGE_NUMBER_PATTERN.matcher(str).replaceAll("");
     }
 
+    public String getNameCommand() {
+        return AvailableCommand.TROUBLE_CODES.getValue();
+    }
+
 }

@@ -45,4 +45,9 @@ public class FuelPressureCommand extends PressureCommand {
         return buffer.get(2) * 3;
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.FUEL_PRESSURE.getValue();
+    }
+
 }

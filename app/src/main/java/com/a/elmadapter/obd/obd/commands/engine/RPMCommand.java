@@ -83,4 +83,9 @@ public class RPMCommand extends ObdCommand {
         return rpm;
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.ENGINE_RPM.getValue();
+    }
+
 }

@@ -72,4 +72,9 @@ public class TimeSinceCCCommand extends ObdCommand {
         return "min";
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.TIME_SINCE_TC_CLEARED.getValue();
+    }
+
 }

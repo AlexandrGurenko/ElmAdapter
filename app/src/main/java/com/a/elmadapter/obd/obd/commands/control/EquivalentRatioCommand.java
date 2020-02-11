@@ -64,4 +64,8 @@ public class EquivalentRatioCommand extends PercentageObdCommand {
         return (double) percentage;
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.EQUIV_RATIO.getValue();
+    }
 }

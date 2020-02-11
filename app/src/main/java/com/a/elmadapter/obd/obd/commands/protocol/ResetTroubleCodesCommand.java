@@ -51,4 +51,10 @@ public class ResetTroubleCodesCommand extends ObdCommand {
         return getResult();
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.RESET_TROUBLE_CODES.getValue();
+    }
+
+
 }

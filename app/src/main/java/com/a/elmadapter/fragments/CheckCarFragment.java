@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
@@ -43,7 +44,6 @@ public class CheckCarFragment extends Fragment implements View.OnClickListener {
 
     private BluetoothSocket socket;
 
-    private ListView listView;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> troubleCodes;
 
@@ -66,8 +66,8 @@ public class CheckCarFragment extends Fragment implements View.OnClickListener {
         final View rootView = inflater.inflate(R.layout.fragment_check_car, container, false);
 
         troubleCodes = new ArrayList<>();
-        listView = rootView.findViewById(R.id.lv_check_car);
-        adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), R.layout.custom_list_item, troubleCodes);
+        ListView listView = rootView.findViewById(R.id.lv_check_car);
+        adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), R.layout.custom_list_item_check_car, troubleCodes);
         listView.setAdapter(adapter);
 
         Button buttonRead = rootView.findViewById(R.id.button_check_read_dtc);
@@ -103,6 +103,12 @@ public class CheckCarFragment extends Fragment implements View.OnClickListener {
         Log.d(TAG, "onResume");
         super.onResume();
         listener.onChangeToolbarTitle("Check Car");
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
     }
 
     @Override
@@ -148,7 +154,7 @@ public class CheckCarFragment extends Fragment implements View.OnClickListener {
                     public void onClick(DialogInterface dialog, int which) {
                         clearDtc();
                         Toast.makeText(getContext(), "Cleared", Toast.LENGTH_SHORT).show();
-                        readDtc();
+                        setDtcList(readDtc());
                     }
                 })
                 .setCancelable(false)
@@ -210,4 +216,5 @@ public class CheckCarFragment extends Fragment implements View.OnClickListener {
             log.info(e.getMessage());
         }
     }
+
 }

@@ -12,6 +12,8 @@
  */
 package com.a.elmadapter.obd.obd.commands;
 
+import androidx.annotation.NonNull;
+
 import com.a.elmadapter.obd.obd.exceptions.NoDataException;
 
 import java.io.IOException;
@@ -110,16 +112,6 @@ public class ObdCommandGroup implements IObdCommand {
     }
 
     @Override
-    public String getName() {
-        StringBuilder res = new StringBuilder();
-        for (ObdCommand command : commands) {
-            res.append(command.getName()).append(",");
-        }
-
-        return res.toString();
-    }
-
-    @Override
     public String getCommandPID() {
         StringBuilder res = new StringBuilder();
         for (ObdCommand command : commands) {
@@ -150,6 +142,7 @@ public class ObdCommandGroup implements IObdCommand {
         return elapsedTime;
     }
 
+    @NonNull
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -157,5 +150,10 @@ public class ObdCommandGroup implements IObdCommand {
             sb.append(command.toString());
         }
         return sb.toString();
+    }
+
+    @Override
+    public String getNameCommand() {
+        return null;
     }
 }

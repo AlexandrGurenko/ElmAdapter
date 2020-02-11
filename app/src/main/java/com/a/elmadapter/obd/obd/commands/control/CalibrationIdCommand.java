@@ -64,4 +64,9 @@ public class CalibrationIdCommand extends PersistentCommand {
         return sb.toString();
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.CALIBRATION_ID.getValue();
+    }
+
 }

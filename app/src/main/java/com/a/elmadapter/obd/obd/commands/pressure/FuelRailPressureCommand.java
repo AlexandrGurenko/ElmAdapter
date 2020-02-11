@@ -47,4 +47,10 @@ public class FuelRailPressureCommand extends PressureCommand {
         return ((a * 256) + b) * 10;
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.FUEL_RAIL_PRESSURE.getValue();
+    }
+
+
 }

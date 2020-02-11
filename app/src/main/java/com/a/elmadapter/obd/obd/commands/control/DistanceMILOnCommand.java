@@ -94,4 +94,9 @@ public class DistanceMILOnCommand extends ObdCommand implements SystemOfUnits {
         return km;
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.DISTANCE_TRAVELED_MIL_ON.getValue();
+    }
+
 }

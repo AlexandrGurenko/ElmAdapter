@@ -26,7 +26,7 @@ public class ObdResetCommand extends ObdProtocolCommand {
         this(0L);
     }
 
-    public ObdResetCommand(Long delay) {
+    private ObdResetCommand(Long delay) {
         super(AvailableCommand.RESET_OBD);
         setResponseTimeDelay(delay);
     }
@@ -46,6 +46,11 @@ public class ObdResetCommand extends ObdProtocolCommand {
     @Override
     public String getFormattedResult() {
         return getResult();
+    }
+
+    @Override
+    public String getNameCommand() {
+        return null;
     }
 
 }

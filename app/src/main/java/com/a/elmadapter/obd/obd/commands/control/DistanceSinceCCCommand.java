@@ -103,4 +103,8 @@ public class DistanceSinceCCCommand extends ObdCommand implements SystemOfUnits 
         this.km = km;
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.DISTANCE_TRAVELED_AFTER_CODES_CLEARED.getValue();
+    }
 }

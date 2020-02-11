@@ -72,4 +72,9 @@ public class TimeSinceMILOnCommand extends ObdCommand {
         return "min";
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.TIME_TRAVELED_MIL_ON.getValue();
+    }
+
 }

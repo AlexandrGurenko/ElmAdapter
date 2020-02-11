@@ -43,4 +43,10 @@ public class ObdWarmStartCommand extends ObdProtocolCommand {
         return getResult();
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.WARM_START.getValue();
+    }
+
+
 }

@@ -48,4 +48,9 @@ public class PendingTroubleCodesCommand extends GenericTroubleCodeCommand {
         return CARRIAGE_NUMBER_PATTERN.matcher(str).replaceAll("");
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.PENDING_TROUBLE_CODES.getValue();
+    }
+
 }

@@ -35,4 +35,9 @@ public class BarometricPressureCommand extends PressureCommand {
         super(other);
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.BAROMETRIC_PRESSURE.getValue();
+    }
+
 }

@@ -53,4 +53,10 @@ public class CloseCommand extends ObdProtocolCommand {
         return getResult();
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.PROTOCOL_CLOSE.getValue();
+    }
+
+
 }

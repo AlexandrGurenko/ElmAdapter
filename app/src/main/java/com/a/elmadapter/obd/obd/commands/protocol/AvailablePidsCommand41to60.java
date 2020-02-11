@@ -25,11 +25,6 @@ public class AvailablePidsCommand41to60 extends GenericAvailablePidsCommand {
 
     private List<Class<? extends ObdCommand>> supportedCommands = new ArrayList<>();
 
-    /**
-     * Default constructor.
-     *
-     * @param command a {@link String} object.
-     */
     public AvailablePidsCommand41to60() {
         super(AvailableCommand.PIDS_41_60, 0x40);
     }
@@ -42,5 +37,11 @@ public class AvailablePidsCommand41to60 extends GenericAvailablePidsCommand {
     public AvailablePidsCommand41to60(AvailablePidsCommand41to60 other) {
         super(other);
     }
+
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.PIDS_41_60.getValue();
+    }
+
 
 }

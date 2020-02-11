@@ -12,6 +12,8 @@
  */
 package com.a.elmadapter.obd.obd.commands;
 
+import androidx.annotation.NonNull;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -29,13 +31,14 @@ public interface IObdCommand {
 
     Object getResultUnit();
 
-    Object getName();
-
     Object getCommandPID();
 
     Map<String, String> getMap();
 
     long getElapsedTime();
 
+    @NonNull
     String toString();
+
+    String getNameCommand();
 }

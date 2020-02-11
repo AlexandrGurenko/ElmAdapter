@@ -36,4 +36,9 @@ public class SelectProtocolCommand extends ObdProtocolCommand {
         return getResult();
     }
 
+    @Override
+    public String getNameCommand() {
+        return null;
+    }
+
 }

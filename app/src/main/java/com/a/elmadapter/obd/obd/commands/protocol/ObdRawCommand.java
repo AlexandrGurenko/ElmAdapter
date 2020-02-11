@@ -36,12 +36,14 @@ public class ObdRawCommand extends ObdProtocolCommand {
         return getResult();
     }
 
+    @Override
+    public String getNameCommand() {
+        return null;
+    }
+
     /**
      * {@inheritDoc}
      */
-    @Override
-    public String getName() {
-        return getName() + getCommandPID();
-    }
+
 
 }

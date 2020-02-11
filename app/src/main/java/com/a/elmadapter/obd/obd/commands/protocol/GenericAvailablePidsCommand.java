@@ -34,7 +34,7 @@ public abstract class GenericAvailablePidsCommand extends PersistentCommand {
      *
      * @param command a {@link String} object.
      */
-    public GenericAvailablePidsCommand(AvailableCommand command, int pad) {
+    GenericAvailablePidsCommand(AvailableCommand command, int pad) {
         super(command);
         padding = pad;
     }
@@ -44,7 +44,7 @@ public abstract class GenericAvailablePidsCommand extends PersistentCommand {
      *
      * @param other a {@link GenericAvailablePidsCommand} object.
      */
-    public GenericAvailablePidsCommand(GenericAvailablePidsCommand other) {
+    GenericAvailablePidsCommand(GenericAvailablePidsCommand other) {
         super(other);
         padding = other.padding;
     }
@@ -71,10 +71,15 @@ public abstract class GenericAvailablePidsCommand extends PersistentCommand {
         return "[ " + sb.toString() + "]";
     }
 
+    public ArrayList<Class<? extends ObdCommand>> getListClassResult() {
+        return new ArrayList<>(supportedCommands);
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
+
     public String getCalculatedResult() {
         // First 4 characters are a copy of the command code, don't return those
         return String.valueOf(rawData).substring(4);

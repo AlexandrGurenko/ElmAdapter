@@ -43,4 +43,9 @@ public class LineFeedOffCommand extends ObdProtocolCommand {
         return getResult();
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.LINE_FEED_OFF.getValue();
+    }
+
 }

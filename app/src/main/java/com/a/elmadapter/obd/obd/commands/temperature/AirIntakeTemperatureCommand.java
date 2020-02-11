@@ -35,4 +35,10 @@ public class AirIntakeTemperatureCommand extends TemperatureCommand {
         super(other);
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.AIR_INTAKE_TEMP.getValue();
+    }
+
+
 }

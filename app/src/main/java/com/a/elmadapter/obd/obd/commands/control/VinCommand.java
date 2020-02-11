@@ -102,4 +102,9 @@ public class VinCommand extends PersistentCommand {
         return sb.toString();
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.VIN.getValue();
+    }
+
 }

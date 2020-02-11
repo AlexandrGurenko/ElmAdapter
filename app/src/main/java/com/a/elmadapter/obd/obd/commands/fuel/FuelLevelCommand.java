@@ -37,4 +37,9 @@ public class FuelLevelCommand extends PercentageObdCommand {
         return percentage;
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.FUEL_LEVEL.getValue();
+    }
+
 }

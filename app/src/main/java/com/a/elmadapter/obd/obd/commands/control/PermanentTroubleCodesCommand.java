@@ -49,4 +49,9 @@ public class PermanentTroubleCodesCommand extends GenericTroubleCodeCommand {
         return CARRIAGE_NUMBER_PATTERN.matcher(str).replaceAll("");
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.PERMANENT_TROUBLE_CODES.getValue();
+    }
+
 }

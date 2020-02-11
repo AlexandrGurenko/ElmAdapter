@@ -41,4 +41,10 @@ public class DescribeProtocolCommand extends ObdProtocolCommand {
         return getResult();
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.DESCRIBE_PROTOCOL.getValue();
+    }
+
+
 }

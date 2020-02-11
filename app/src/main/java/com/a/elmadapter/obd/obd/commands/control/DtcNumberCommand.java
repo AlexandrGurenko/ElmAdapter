@@ -91,4 +91,9 @@ public class DtcNumberCommand extends ObdCommand {
         return milOn;
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.DTC_NUMBER.getValue();
+    }
+
 }

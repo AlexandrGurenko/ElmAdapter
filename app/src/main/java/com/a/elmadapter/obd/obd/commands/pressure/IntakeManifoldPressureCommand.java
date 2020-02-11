@@ -35,4 +35,10 @@ public class IntakeManifoldPressureCommand extends PressureCommand {
         super(other);
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.INTAKE_MANIFOLD_PRESSURE.getValue();
+    }
+
+
 }

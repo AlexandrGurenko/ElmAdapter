@@ -59,4 +59,9 @@ public class TimingAdvanceCommand extends ObdCommand {
         return "°";
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.TIMING_ADVANCE.getValue();
+    }
+
 }

@@ -37,4 +37,9 @@ public class EthanolLevelCommand extends PercentageObdCommand {
         return percentage;
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.ETHANOL_LEVEL.getValue();
+    }
+
 }

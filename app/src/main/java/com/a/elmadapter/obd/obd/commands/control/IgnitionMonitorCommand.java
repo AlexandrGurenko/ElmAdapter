@@ -60,6 +60,11 @@ public class IgnitionMonitorCommand extends ObdCommand {
     public boolean isIgnitionOn() {
         return ignitionOn;
     }
+
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.IGNITION_MONITOR.getValue();
+    }
 }
 
 

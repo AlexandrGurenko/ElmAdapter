@@ -86,4 +86,10 @@ public class DescribeProtocolNumberCommand extends ObdCommand {
         return obdProtocol;
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.DESCRIBE_PROTOCOL_NUMBER.getValue();
+    }
+
+
 }

@@ -43,4 +43,10 @@ public class EchoOffCommand extends ObdProtocolCommand {
         return getResult();
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.ECHO_OFF.getValue();
+    }
+
+
 }

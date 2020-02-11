@@ -35,4 +35,10 @@ public class AmbientAirTemperatureCommand extends TemperatureCommand {
         super(other);
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.AMBIENT_AIR_TEMP.getValue();
+    }
+
+
 }

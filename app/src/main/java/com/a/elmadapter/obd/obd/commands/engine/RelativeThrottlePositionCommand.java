@@ -37,4 +37,9 @@ public class RelativeThrottlePositionCommand extends PercentageObdCommand {
         super(other);
     }
 
+    @Override
+    public String getNameCommand() {
+        return AvailableCommand.REL_THROTTLE_POS.getValue();
+    }
+
 }
