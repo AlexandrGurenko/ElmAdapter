@@ -629,10 +629,6 @@ public class MainActivity extends AppCompatActivity implements
         @Override
         protected Void doInBackground(Void... voids) {
 
-//            while (checkProtocol()) {
-//                SystemClock.sleep(2000);
-//                log.info("Keep Alive - OK");
-//            }
             while (isConnected(bluetoothDevice)) {
                 SystemClock.sleep(5000);
                 log.info("Connected");
