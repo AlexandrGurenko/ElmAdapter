@@ -19,9 +19,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -39,10 +38,8 @@ import com.a.elmadapter.fragments.HomeFragment;
 import com.a.elmadapter.obd.obd.commands.ObdCommandGroup;
 import com.a.elmadapter.obd.obd.commands.control.CalibrationIdCommand;
 import com.a.elmadapter.obd.obd.commands.control.ModuleVoltageCommand;
-import com.a.elmadapter.obd.obd.commands.control.PendingTroubleCodesCommand;
 import com.a.elmadapter.obd.obd.commands.control.VinCommand;
 import com.a.elmadapter.obd.obd.commands.engine.LoadCommand;
-import com.a.elmadapter.obd.obd.commands.engine.OilTempCommand;
 import com.a.elmadapter.obd.obd.commands.engine.RPMCommand;
 import com.a.elmadapter.obd.obd.commands.engine.RelativeThrottlePositionCommand;
 import com.a.elmadapter.obd.obd.commands.engine.SpeedCommand;
@@ -51,7 +48,6 @@ import com.a.elmadapter.obd.obd.commands.fuel.FuelLevelCommand;
 import com.a.elmadapter.obd.obd.commands.protocol.AvailablePidsCommand01to20;
 import com.a.elmadapter.obd.obd.commands.protocol.CloseCommand;
 import com.a.elmadapter.obd.obd.commands.protocol.ObdResetCommand;
-import com.a.elmadapter.obd.obd.commands.protocol.ResetTroubleCodesCommand;
 import com.a.elmadapter.obd.obd.commands.temperature.AirIntakeTemperatureCommand;
 import com.a.elmadapter.obd.obd.commands.temperature.AmbientAirTemperatureCommand;
 import com.a.elmadapter.obd.obd.commands.temperature.EngineCoolantTemperatureCommand;
@@ -59,7 +55,6 @@ import com.a.elmadapter.obd.obd.exceptions.NoDataException;
 import com.a.elmadapter.obd.obd.exceptions.NonNumericResponseException;
 import com.a.elmadapter.obd.obd.exceptions.UnableToConnectException;
 import com.a.elmadapter.obd.obd.exceptions.UnknownErrorException;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.File;
@@ -103,13 +98,15 @@ public class MainActivity extends AppCompatActivity implements
     static boolean isConnectedToELM = false;
     static boolean isConnectedToOBD = false;
 
+    Menu menu;
+
     @SuppressLint("StaticFieldLeak")
     static HomeFragment homeFragment;
+    @SuppressLint("StaticFieldLeak")
     static DashboardFragment dashboardFragment;
     @SuppressLint("StaticFieldLeak")
     static CheckCarFragment checkCarFragment;
     Toolbar toolbar;
-    TextView homeText, dashboardText, checkCarText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,21 +115,17 @@ public class MainActivity extends AppCompatActivity implements
 
         clearPref();
 
-        homeText = findViewById(R.id.text_home);
-        dashboardText = findViewById(R.id.text_dashboard);
-        checkCarText = findViewById(R.id.text_check_car);
-
         //Navigation
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                connectToBtDevice();
-            }
-        });
+//        FloatingActionButton fab = findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                connectToBtDevice();
+//            }
+//        });
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -222,6 +215,7 @@ public class MainActivity extends AppCompatActivity implements
 
                     if (bluetoothSocket != null && bluetoothSocket.isConnected()) {
                         new ConnectToOBDII(bluetoothSocket).execute();
+                        setMenuTitle("Disconnect");
                     } else {
                         homeFragment.setText("Bluetooth is in use by another application or is not found");
                         disconnect();
@@ -275,8 +269,13 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    private void setMenuTitle(String s) {
+        menu.findItem(R.id.bt_connect).setTitle(s);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_main, menu);
         return true;
@@ -303,9 +302,12 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void changeFragment(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container, fragment);
-        fragmentTransaction.commit();
+        if (fragment == homeFragment || isConnectedToOBD) {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.container, fragment);
+            fragmentTransaction.commit();
+        } else
+            Toast.makeText(this, "No connection", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -417,73 +419,83 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.readVIN:
-                readVin();
-                return true;
 
-            case R.id.readDTC:
-                log.info("Read DTC");
-                PendingTroubleCodesCommand ptcc = new PendingTroubleCodesCommand();
-                try {
-                    ptcc.run(bluetoothSocket.getInputStream(), bluetoothSocket.getOutputStream());
-
-                    Log.d(TAG, ptcc.getFormattedResult());
-                    log.info(ptcc.getFormattedResult());
-
-                } catch (InterruptedException | IOException | NullPointerException | NoDataException e) {
-
-                    Log.d(TAG, Objects.requireNonNull(e.getMessage()));
-                    log.info(e.getMessage());
-
+            case R.id.bt_connect:
+                MenuItem menuItem = menu.findItem(R.id.bt_connect);
+                if (menuItem.getTitle().equals("Connect")) {
+                    connectToBtDevice();
+                } else if (menuItem.getTitle().equals("Disconnect")) {
+                    setMenuTitle("Connect");
+                    disconnect();
                 }
                 return true;
 
-            case R.id.clearDTC:
-                log.info("Clear DTC");
-                final ResetTroubleCodesCommand resetTroubleCodes = new ResetTroubleCodesCommand();
-                try {
-                    resetTroubleCodes.run(bluetoothSocket.getInputStream(), bluetoothSocket.getOutputStream());
-                    log.info("Fault Codes Cleared - " + resetTroubleCodes.getFormattedResult());
-
-                } catch (InterruptedException | IOException | NullPointerException e) {
-                    log.info(e.getMessage());
-                }
+            case R.id.settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
                 return true;
-
-            case R.id.scan:
-                log.info("Scan");
-                log.info("Starting background thread for scanning");
-                new ScanTask().execute();
-                return true;
-
-            case R.id.readOilTemp:
-                log.info("Oil temp");
-                OilTempCommand oilTempCommand = new OilTempCommand();
-                if (isConnectedToELM) {
-                    try {
-                        oilTempCommand.run(bluetoothSocket.getInputStream(), bluetoothSocket.getOutputStream());
-
-                        Log.d(TAG, oilTempCommand.getFormattedResult());
-                        log.info(oilTempCommand.getFormattedResult() + " - " + oilTempCommand.getCalculatedResult());
-                        responses.add(0, "\n" + oilTempCommand.getFormattedResult());
-                        listViewAdapter.notifyDataSetChanged();
-                    } catch (InterruptedException | IOException | NoDataException | NullPointerException e) {
-
-                        Log.d(TAG, Objects.requireNonNull(e.getMessage()));
-                        responses.add(0, "\n" + e.getMessage());
-                        listViewAdapter.notifyDataSetChanged();
-                        log.info(e.getMessage());
-                    }
-                } else {
-                    Log.d(TAG, "Error connection");
-                    log.info("Error connection");
-                }
-                return true;
-
-            case R.id.disconnect:
-                disconnect();
-
-                return true;
+//            case R.id.readVIN:
+//                readVin();
+//                return true;
+//
+//            case R.id.readDTC:
+//                log.info("Read DTC");
+//                PendingTroubleCodesCommand ptcc = new PendingTroubleCodesCommand();
+//                try {
+//                    ptcc.run(bluetoothSocket.getInputStream(), bluetoothSocket.getOutputStream());
+//
+//                    Log.d(TAG, ptcc.getFormattedResult());
+//                    log.info(ptcc.getFormattedResult());
+//
+//                } catch (InterruptedException | IOException | NullPointerException | NoDataException e) {
+//
+//                    Log.d(TAG, Objects.requireNonNull(e.getMessage()));
+//                    log.info(e.getMessage());
+//
+//                }
+//                return true;
+//
+//            case R.id.clearDTC:
+//                log.info("Clear DTC");
+//                final ResetTroubleCodesCommand resetTroubleCodes = new ResetTroubleCodesCommand();
+//                try {
+//                    resetTroubleCodes.run(bluetoothSocket.getInputStream(), bluetoothSocket.getOutputStream());
+//                    log.info("Fault Codes Cleared - " + resetTroubleCodes.getFormattedResult());
+//
+//                } catch (InterruptedException | IOException | NullPointerException e) {
+//                    log.info(e.getMessage());
+//                }
+//                return true;
+//
+//            case R.id.scan:
+//                log.info("Scan");
+//                log.info("Starting background thread for scanning");
+//                new ScanTask().execute();
+//                return true;
+//
+//            case R.id.readOilTemp:
+//                log.info("Oil temp");
+//                OilTempCommand oilTempCommand = new OilTempCommand();
+//                if (isConnectedToELM) {
+//                    try {
+//                        oilTempCommand.run(bluetoothSocket.getInputStream(), bluetoothSocket.getOutputStream());
+//
+//                        Log.d(TAG, oilTempCommand.getFormattedResult());
+//                        log.info(oilTempCommand.getFormattedResult() + " - " + oilTempCommand.getCalculatedResult());
+//                        responses.add(0, "\n" + oilTempCommand.getFormattedResult());
+//                        listViewAdapter.notifyDataSetChanged();
+//                    } catch (InterruptedException | IOException | NoDataException | NullPointerException e) {
+//
+//                        Log.d(TAG, Objects.requireNonNull(e.getMessage()));
+//                        responses.add(0, "\n" + e.getMessage());
+//                        listViewAdapter.notifyDataSetChanged();
+//                        log.info(e.getMessage());
+//                    }
+//                } else {
+//                    Log.d(TAG, "Error connection");
+//                    log.info("Error connection");
+//                }
+//                return true;
 
             case R.id.exit:
                 disconnect();
@@ -526,7 +538,6 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onStop() {
-        clearPref();
         super.onStop();
     }
 

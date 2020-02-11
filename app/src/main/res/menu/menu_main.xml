@@ -2,33 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/scan"
-        android:title="@string/scan" />
+    <item
+        android:id="@+id/bt_connect"
+        android:title="@string/connect"
+        app:showAsAction="always" />
 
     <item
-        android:id="@+id/readVIN"
-        android:title="@string/readVIN" />
-
-    <item android:id="@+id/readOilTemp"
-        android:title="@string/readOilTemp" />
-
-    <item
-        android:id="@+id/dtcs"
-        android:title="@string/dtcSettings">
-        <menu>
-
-            <item
-                android:id="@+id/readDTC"
-                android:title="@string/readDTC" />
-            <item
-                android:id="@+id/clearDTC"
-                android:title="@string/clearDTC" />
-
-        </menu>
-    </item>
-    <item
-        android:id="@+id/disconnect"
-        android:title="@string/disconnect" />
+        android:id="@+id/settings"
+        android:title="@string/settings" />
 
     <item
         android:id="@+id/exit"
