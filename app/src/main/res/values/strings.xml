@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">ElmAdapter</string>
+    <string name="connect">Connect</string>
+    <string name="connected">Connected</string>
+    <string name="readECUName">ECU ID</string>
+    <string name="readDTC">Read DTC</string>
+    <string name="readVIN">VIN</string>
+    <string name="readRPM">RPM</string>
+    <string name="readOilTemp">Oil Temperature</string>
+    <string name="readEngineCoolantTemp">Coolant Temperature</string>
+    <string name="stop">Stop</string>
+    <string name="exit">Exit</string>
+    <string name="throttle_position">Throttle position</string>
+    <string name="dtcSettings">DTCs</string>
+    <string name="clearDTC">Clear DTC</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="scan">Scan</string>
+    <string name="menu_dashboard">Dashboard</string>
+    <string name="menu_checkCar">Check Car</string>
+    <string name="menu_home">Home</string>
+    <string name="nav_app_bar_close_description">Close</string>
+
+</resources>
